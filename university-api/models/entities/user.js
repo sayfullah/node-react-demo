@@ -5,7 +5,8 @@ const User = sequelize.define('User', {
 
     userName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     firstName: {
         type: DataTypes.TEXT,
@@ -21,7 +22,8 @@ const User = sequelize.define('User', {
     },
     email: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     userStatus: {
         type: DataTypes.BOOLEAN,

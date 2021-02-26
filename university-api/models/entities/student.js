@@ -17,11 +17,13 @@ const Student = sequelize.define('Student', {
     },
     studentPhoneNumber: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     studentEmail: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     studentAddress: {
         type: DataTypes.TEXT,
