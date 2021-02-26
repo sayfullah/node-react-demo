@@ -4,24 +4,24 @@ const userService =require('../services/user-service');
 module.exports= route;
 
 
-route.get('/', (req, res) => {
-    userService.getAllUsers(req, res);
+route.get('/',  async (req, res) => {
+    await userService.getAllUsers(req, res);
 });
 
-route.post('/', (req, res) => {
-    userService.createUser(req, res);
+route.post('/', async (req, res) => {
+    await userService.createUser(req, res);
 });
 
-route.get('/:id', (req, res) => {
-    userService.getUser(req, res);
+route.get('/:id', async (req, res) => {
+    await userService.getUser(req, res);
 });
 
-route.put('/:id', (req, res) => {
-    userService.geUpdateUser(req, res);
+route.put('/:id', async (req, res) => {
+    await userService.geUpdateUser(req, res);
 });
 
-route.delete('/:id', (req, res) => {
-    userService.removeUser(req, res);
+route.delete('/:id',  async (req, res) => {
+    await userService.removeUser(req, res);
 });
 
 
