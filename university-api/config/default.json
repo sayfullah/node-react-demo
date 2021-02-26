@@ -1,3 +1,4 @@
 {
-  "name": "Node-React Demo Application"
+  "name": "Node-React Demo Application",
+  "jwtPrivateKey": ""
 }

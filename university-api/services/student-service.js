@@ -22,6 +22,15 @@ async function createStudent(req, res) {
             res.status(400).send(response(400, validationRslt.error.details[0].message));
             return;
         }
+
+        const studentExist = await Student.findOne({
+            studentEmail: request.studentEmail
+        });
+        if(studentExist){
+            res.status(400).send(response(400, "Student Already Exists with this email"));
+            return;
+        }
+
         console.log('Creating Student....');
         const newStudent = await Student.create(studentMapper.getStudentForCreation(request));
         res.status(200).send(response(200, "Student Created successfully", newStudent));

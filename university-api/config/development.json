@@ -1,6 +1,7 @@
 {
   "app_name": "Node-React Demo Application - ENV: Development",
   "app_port": 8080,
+  "jwtPrivateKey": "jwtSecretKey",
   "datasource": {
     "dialect": "postgres",
     "database": "universitydb",

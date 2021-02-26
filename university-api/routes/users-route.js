@@ -1,10 +1,11 @@
 const express = require('express');
+const authMw = require('../middleware/auth-mw')
 const route = express.Router();
 const userService =require('../services/user-service');
 module.exports= route;
 
 
-route.get('/',  async (req, res) => {
+route.get('/', authMw,  async (req, res) => {
     await userService.getAllUsers(req, res);
 });
 

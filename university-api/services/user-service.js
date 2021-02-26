@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const User = require('../models/entities/user');
 const userMapper = require('../mappers/user-mapper');
 const response = require('../models/dtos/response');
@@ -22,9 +23,14 @@ async function createUser(req, res) {
             res.status(400).send(response(400, validationRslt.error.details[0].message));
             return;
         }
+
         console.log('Creating user....');
-        const newUser = await User.create(userMapper.getUserForCreation(request));
-        res.status(200).send(response(200, "User Created successfully", newUser));
+        const userReq = await userMapper.getUserForCreation(request);
+        const newUser = await User.create(userReq);
+        res.status(200).send(response(
+            200,
+            "User Created successfully",
+            _.pick(newUser, ['userName', 'firstName', 'lastName', 'email'])));
     } catch (err) {
         console.log(err);
         res.status(500).send(response(500, err.message));

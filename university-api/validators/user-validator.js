@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const createSchema = Joi.object({
-    username: Joi.string()
+    userName: Joi.string()
         .alphanum()
         .min(3)
         .max(30)
