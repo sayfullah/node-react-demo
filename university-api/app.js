@@ -1,3 +1,4 @@
+require('express-async-errors');
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -12,7 +13,10 @@ app.use(morgan('tiny'));
 app.use('/users', require('./routes/users-route'));
 app.use('/courses', require('./routes/courses-route'));
 app.use('/students', require('./routes/students-route'));
+app.use('/auth', require('./routes/auth-route'));
 app.use(errorHandler);
+
+console.log(config.get('jwtPrivateKey'));
 
 const port = config.get('app_port');
 app.listen(port, () => {
