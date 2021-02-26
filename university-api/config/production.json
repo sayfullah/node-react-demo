@@ -1,0 +1,11 @@
+{
+  "app_name": "Node-React Demo Application - ENV: Production",
+  "app_port": 8080,
+  "datasource": {
+    "database": "university-record-db",
+    "host": "localhost",
+    "port": "5432",
+    "user": "",
+    "password": ""
+  }
+}

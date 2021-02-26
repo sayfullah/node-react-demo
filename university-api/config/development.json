@@ -1,0 +1,13 @@
+{
+  "app_name": "Node-React Demo Application - ENV: Development",
+  "app_port": 8080,
+  "datasource": {
+    "dialect": "postgres",
+    "database": "universitydb",
+    "schema": "university",
+    "host": "192.168.122.87",
+    "port": "5432",
+    "username": "sayfullah",
+    "password": "sayfullah@123"
+  }
+}
