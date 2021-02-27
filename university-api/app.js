@@ -2,35 +2,22 @@ require('express-async-errors');
 const winston = require('winston');
 const express = require('express');
 const helmet = require('helmet');
+const compression = require('compression');
 const morgan = require('morgan');
 const config = require('config');
 const errorHandler = require('./middleware/global-error-handler');
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
+app.use(compression());
 app.use(morgan('tiny'));
-app.use('/users', require('./routes/users-route'));
-app.use('/courses', require('./routes/courses-route'));
-app.use('/students', require('./routes/students-route'));
-app.use('/auth', require('./routes/auth-route'));
+
+require('./app-configs/logging')();
+require('./app-configs/routes')(app);
+
 app.use(errorHandler);
-
-winston.add(new winston.transports.Console());
-winston.add(new winston.transports.File({filename: 'application.log'}));
-
-process.on('uncaughtException', (error => {
-        winston.error('uncaughtException');
-        winston.error(error.message, error);
-    })
-);
-
-process.on('unhandledRejection', (error => {
-        winston.error('unhandledRejection');
-        winston.error(error.message, error);
-    })
-);
 
 if (!config.get('jwtPrivateKey'))
     winston.error(`JWT secret not found........`);

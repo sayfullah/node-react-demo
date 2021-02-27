@@ -7,9 +7,10 @@ const winston = require('winston');
 
 async function getAllUsers(req, res) {
     winston.info('Getting all users....');
-    const users = await User.findAll();
+    const users = await User.findAll({
+        attributes: { exclude: ['password'] }
+    });
     res.status(200).send(response(200, "Users found", users));
-
 };
 
 async function createUser(req, res) {
@@ -32,7 +33,12 @@ async function createUser(req, res) {
 
 async function getUser(req, res) {
     winston.info('Getting user....');
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findOne({
+        where: {
+            id: req.params.id
+        },
+        attributes: { exclude: ['password'] }
+    });
     if (user)
         res.status(200).send(response(200, "User found", user));
     else
