@@ -17,8 +17,20 @@ app.use('/students', require('./routes/students-route'));
 app.use('/auth', require('./routes/auth-route'));
 app.use(errorHandler);
 
-winston.add( new winston.transports.Console());
-winston.add(new winston.transports.File({ filename: 'application.log' }));
+winston.add(new winston.transports.Console());
+winston.add(new winston.transports.File({filename: 'application.log'}));
+
+process.on('uncaughtException', (error => {
+        winston.error('uncaughtException');
+        winston.error(error.message, error);
+    })
+);
+
+process.on('unhandledRejection', (error => {
+        winston.error('unhandledRejection');
+        winston.error(error.message, error);
+    })
+);
 
 if (!config.get('jwtPrivateKey'))
     winston.error(`JWT secret not found........`);
