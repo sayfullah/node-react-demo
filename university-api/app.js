@@ -20,7 +20,8 @@ app.use(errorHandler);
 winston.add( new winston.transports.Console());
 winston.add(new winston.transports.File({ filename: 'application.log' }));
 
-winston.info(config.get('jwtPrivateKey'));
+if (!config.get('jwtPrivateKey'))
+    winston.error(`JWT secret not found........`);
 
 const port = config.get('app_port');
 app.listen(port, () => {

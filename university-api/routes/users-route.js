@@ -13,16 +13,13 @@ route.post('/', async (req, res) => {
     await userService.createUser(req, res);
 });
 
-route.get('/:id', async (req, res) => {
+route.get('/:id', authMw, async (req, res) => {
     await userService.getUser(req, res);
 });
 
-route.put('/:id', async (req, res) => {
+route.put('/:id', authMw, async (req, res) => {
     await userService.geUpdateUser(req, res);
 });
 
-route.delete('/:id',  async (req, res) => {
-    await userService.removeUser(req, res);
-});
 
 
