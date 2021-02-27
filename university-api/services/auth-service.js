@@ -16,12 +16,14 @@ async function authenticate(req, res) {
     });
 
     if (!user) {
+        winston.warn(`Invalid User login attempt: ${request.userName}`);
         res.status(400).send(response(400, "Invalid username or password"));
         return;
     }
 
     const validPassword = await bcrypt.compare(request.password, user.password);
     if (!validPassword) {
+        winston.warn(`Invalid Password login attempt: ${request.userName}`);
         res.status(400).send(response(400, "Invalid username or password"));
         return;
     }
