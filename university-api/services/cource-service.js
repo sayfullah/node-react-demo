@@ -2,9 +2,10 @@ const Course = require('../models/entities/course');
 const courseMapper = require('../mappers/course-mapper');
 const response = require('../models/dtos/response');
 const courseValidator = require('../validators/course-validator');
+const winston = require('winston');
 
 async function getAllCourses(req, res) {
-    console.log('Getting all courses....');
+    winston.info('Getting all courses....');
     const courses = await Course.findAll();
     res.status(200).send(response(200, "Courses found", courses));
 };
@@ -17,13 +18,13 @@ async function createCourse(req, res) {
         return;
     }
 
-    console.log('Creating Course....');
+    winston.info('Creating Course....');
     const newCourse = await Course.create(courseMapper.getCourseForCreation(request));
     res.status(200).send(response(200, "Course Created successfully", newCourse));
 };
 
 async function getCourse(req, res) {
-    console.log('Getting Course....');
+    winston.info('Getting Course....');
     const course = await Course.findByPk(req.params.id);
     if (course)
         res.status(200).send(response(200, "Course found", course));
@@ -39,7 +40,7 @@ async function geUpdateCourse(req, res) {
         return;
     }
 
-    console.log('Updating Course....');
+    winston.info('Updating Course....');
     const updatedCourse = await Course.update(
         courseMapper.getCourseForUpdate(request),
         {
@@ -47,7 +48,7 @@ async function geUpdateCourse(req, res) {
                 id: req.params.id
             }
         });
-    console.log(updatedCourse);
+    winston.info(updatedCourse);
     if (updatedCourse.includes(1))
         res.status(200).send(response(200, "Course updated successfully"));
     else

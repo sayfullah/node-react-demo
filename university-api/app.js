@@ -1,4 +1,5 @@
 require('express-async-errors');
+const winston = require('winston');
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -16,10 +17,13 @@ app.use('/students', require('./routes/students-route'));
 app.use('/auth', require('./routes/auth-route'));
 app.use(errorHandler);
 
-console.log(config.get('jwtPrivateKey'));
+winston.add( new winston.transports.Console());
+winston.add(new winston.transports.File({ filename: 'application.log' }));
+
+winston.info(config.get('jwtPrivateKey'));
 
 const port = config.get('app_port');
 app.listen(port, () => {
-    console.log(`Application Name ${config.get('name')}`);
-    console.log(`Listening on port ${port}.........`);
+    winston.info(`Application Name ${config.get('name')}`);
+    winston.info(`Listening on port ${port}.........`);
 });

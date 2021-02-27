@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../../connections/sequelize-connection');
+const winston = require('winston');
 
 const Student = sequelize.define('Student', {
 
@@ -49,7 +50,7 @@ module.exports = Student;
 
 async function syncStudentWithDatabase() {
     await Student.sync({ alter: true });
-    console.log("The table for the Student model was just synchronized");
+    winston.info("The table for the Student model was just synchronized");
 }
 
 syncStudentWithDatabase();

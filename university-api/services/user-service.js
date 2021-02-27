@@ -3,9 +3,10 @@ const User = require('../models/entities/user');
 const userMapper = require('../mappers/user-mapper');
 const response = require('../models/dtos/response');
 const userValidator = require('../validators/user-validator');
+const winston = require('winston');
 
 async function getAllUsers(req, res) {
-    console.log('Getting all users....');
+    winston.info('Getting all users....');
     const users = await User.findAll();
     res.status(200).send(response(200, "Users found", users));
 
@@ -19,7 +20,7 @@ async function createUser(req, res) {
         return;
     }
 
-    console.log('Creating user....');
+    winston.info('Creating user....');
     const userReq = await userMapper.getUserForCreation(request);
     const newUser = await User.create(userReq);
     res.status(200).send(response(
@@ -30,7 +31,7 @@ async function createUser(req, res) {
 };
 
 async function getUser(req, res) {
-    console.log('Getting user....');
+    winston.info('Getting user....');
     const user = await User.findByPk(req.params.id);
     if (user)
         res.status(200).send(response(200, "User found", user));
@@ -47,7 +48,7 @@ async function geUpdateUser(req, res) {
         return;
     }
 
-    console.log('Updating user....');
+    winston.info('Updating user....');
     const updatedUser = await User.update(
         userMapper.getUserForUpdate(request),
         {
@@ -55,7 +56,7 @@ async function geUpdateUser(req, res) {
                 id: req.params.id
             }
         });
-    console.log(updatedUser);
+    winston.info(updatedUser);
     if (updatedUser.includes(1))
         res.status(200).send(response(200, "User updated successfully"));
     else

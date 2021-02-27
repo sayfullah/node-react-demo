@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const response = require('../models/dtos/response');
+const winston = require('winston');
 
 function auth(req, res, next) {
     const token = req.header('auth-token');

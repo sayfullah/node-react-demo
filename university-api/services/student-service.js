@@ -2,9 +2,10 @@ const Student = require('../models/entities/student');
 const studentMapper = require('../mappers/student-mapper');
 const response = require('../models/dtos/response');
 const studentValidator = require('../validators/student-validator');
+const winston = require('winston');
 
 async function getAllStudents(req, res) {
-    console.log('Getting all Students....');
+    winston.info('Getting all Students....');
     const students = await Student.findAll();
     res.status(200).send(response(200, "Students found", students));
 
@@ -26,13 +27,13 @@ async function createStudent(req, res) {
         return;
     }
 
-    console.log('Creating Student....');
+    winston.info('Creating Student....');
     const newStudent = await Student.create(studentMapper.getStudentForCreation(request));
     res.status(200).send(response(200, "Student Created successfully", newStudent));
 };
 
 async function getStudent(req, res) {
-    console.log('Getting Student....');
+    winston.info('Getting Student....');
     const student = await Student.findByPk(req.params.id);
     if (student)
         res.status(200).send(response(200, "Student found", student));
@@ -49,7 +50,7 @@ async function geUpdateStudent(req, res) {
         return;
     }
 
-    console.log('Updating Student....');
+    winston.info('Updating Student....');
     const updatedStudent = await Student.update(
         studentMapper.getStudentForUpdate(request),
         {
@@ -57,7 +58,7 @@ async function geUpdateStudent(req, res) {
                 id: req.params.id
             }
         });
-    console.log(updatedStudent);
+    winston.info(updatedStudent);
     if (updatedStudent.includes(1))
         res.status(200).send(response(200, "Student updated successfully"));
     else
